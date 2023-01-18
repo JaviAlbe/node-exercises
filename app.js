@@ -5,6 +5,11 @@ const path = require('path')
 
 const app = express()
 
+//Configure dynamic templates with the PUG library
+app.set('view engine', 'pug')
+//Tell PUG what folder contains the views
+app.set('views', 'views')
+
 const adminData = require('./routes/admin')
 
 const shopRoutes = require('./routes/shop.js')
