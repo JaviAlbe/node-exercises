@@ -1,20 +1,22 @@
-const express = require('express')
-const path =  require('path')
-const rootDir =  require('../util/path.js')
+const path = require('path');
 
-const adminData =  require('./admin.js')
+const express = require('express');
 
-const router =  express.Router()
+const rootDir = require('../util/path');
+const adminData = require('./admin');
+
+const router = express.Router();
 
 router.get('/', (req, res, next) => {
+  const products = adminData.products;
+  res.render('shop', {
+    prods: products,
+    pageTitle: 'Shop',
+    path: '/',
+    hasProducts: products.length > 0,
+    activeShop: true,
+    productCSS: true
+  });
+});
 
-    const products = adminData.products
-    //no dynamic template
-    // console.log(adminData.products)
-    // res.sendFile(path.join(rootDir, 'views', 'shop.html'))
-
-    //PUG dynamic template. We also pass the prodcuts added in shop view
-    res.render('shop', {prods: products, docTitle:'Shop'})
-})
-
-module.exports = router
+module.exports = router;

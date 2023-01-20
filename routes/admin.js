@@ -1,22 +1,29 @@
- const express = require('express')
- const path = require('path')
- const rootDir =  require('../util/path.js')
- const router =  express.Router()
+const path = require('path');
 
- const products = []
+const express = require('express');
 
- router.get('/add-product', (req, res, next) => {
-     res.sendFile(path.join(rootDir, 'views', 'add-product.html'))
- })
+const rootDir = require('../util/path');
 
- //app.post and app.get execute only when the type of request is one of those
- router.post('/add-product', (req, res, next) => {
-     console.log(req.body)
-     products.push({title: req.body.title})
-     res.redirect('/')
- })
+const router = express.Router();
 
- module.exports = {
-     routes : router,
-     products : products
- }
+const products = [];
+
+// /admin/add-product => GET
+router.get('/add-product', (req, res, next) => {
+  res.render('add-product', {
+    pageTitle: 'Add Product',
+    path: '/admin/add-product',
+    formsCSS: true,
+    productCSS: true,
+    activeAddProduct: true
+  });
+});
+
+// /admin/add-product => POST
+router.post('/add-product', (req, res, next) => {
+  products.push({ title: req.body.title });
+  res.redirect('/');
+});
+
+exports.routes = router;
+exports.products = products;
